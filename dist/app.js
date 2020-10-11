@@ -99,6 +99,20 @@ class DOMComponent {
         this.hostElement.insertAdjacentElement(this.hostPosition, this.element);
     }
 }
+class ProjectItem extends DOMComponent {
+    constructor(hostElId, textContent) {
+        super('single-project', hostElId, 'beforeend');
+        this.textContent = textContent;
+        this.renderContent();
+    }
+    configure() { }
+    renderContent() {
+        if (!this.textContent) {
+            return;
+        }
+        this.element.textContent = this.textContent;
+    }
+}
 class ProjectList extends DOMComponent {
     constructor(status) {
         super('project-list', 'app', 'beforeend', `${status}-projects`);
@@ -124,9 +138,7 @@ class ProjectList extends DOMComponent {
         const listEl = document.getElementById(listId);
         listEl.innerHTML = '';
         for (const project of this.assignedProjects) {
-            const listItem = document.createElement('li');
-            listItem.textContent = project.title;
-            listEl.appendChild(listItem);
+            const _ = new ProjectItem(listId, project.title);
         }
     }
 }
