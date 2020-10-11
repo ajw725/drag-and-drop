@@ -162,7 +162,13 @@ abstract class DOMComponent<T extends HTMLElement, U extends HTMLElement> {
 }
 
 class ProjectItem extends DOMComponent<HTMLUListElement, HTMLLIElement> {
-  constructor(hostElId: string, private textContent?: string) {
+  get contributors() {
+    return `${this.project.people} contributor${
+      this.project.people === 1 ? '' : 's'
+    }`;
+  }
+
+  constructor(hostElId: string, private project: Project) {
     super('single-project', hostElId, 'beforeend');
 
     this.renderContent();
@@ -171,11 +177,9 @@ class ProjectItem extends DOMComponent<HTMLUListElement, HTMLLIElement> {
   configure() {}
 
   renderContent() {
-    if (!this.textContent) {
-      return;
-    }
-
-    this.element.textContent = this.textContent;
+    this.element.querySelector('h2')!.textContent = this.project.title;
+    this.element.querySelector('h3')!.textContent = this.contributors;
+    this.element.querySelector('p')!.textContent = this.project.description;
   }
 }
 
@@ -212,7 +216,7 @@ class ProjectList extends DOMComponent<HTMLDivElement, HTMLElement> {
     const listEl = document.getElementById(listId)! as HTMLUListElement;
     listEl.innerHTML = ''; // not optimal, but fine for this project
     for (const project of this.assignedProjects) {
-      const _ = new ProjectItem(listId, project.title);
+      const _ = new ProjectItem(listId, project);
     }
   }
 }

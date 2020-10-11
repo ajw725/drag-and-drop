@@ -100,17 +100,19 @@ class DOMComponent {
     }
 }
 class ProjectItem extends DOMComponent {
-    constructor(hostElId, textContent) {
+    constructor(hostElId, project) {
         super('single-project', hostElId, 'beforeend');
-        this.textContent = textContent;
+        this.project = project;
         this.renderContent();
+    }
+    get contributors() {
+        return `${this.project.people} contributor${this.project.people === 1 ? '' : 's'}`;
     }
     configure() { }
     renderContent() {
-        if (!this.textContent) {
-            return;
-        }
-        this.element.textContent = this.textContent;
+        this.element.querySelector('h2').textContent = this.project.title;
+        this.element.querySelector('h3').textContent = this.contributors;
+        this.element.querySelector('p').textContent = this.project.description;
     }
 }
 class ProjectList extends DOMComponent {
@@ -138,7 +140,7 @@ class ProjectList extends DOMComponent {
         const listEl = document.getElementById(listId);
         listEl.innerHTML = '';
         for (const project of this.assignedProjects) {
-            const _ = new ProjectItem(listId, project.title);
+            const _ = new ProjectItem(listId, project);
         }
     }
 }
