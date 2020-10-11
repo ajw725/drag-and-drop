@@ -1,4 +1,4 @@
-export function Autobind(_target, _methodName, descriptor) {
+export default function Autobind(_target, _methodName, descriptor) {
     const newDescriptor = {
         configurable: true,
         enumerable: false,

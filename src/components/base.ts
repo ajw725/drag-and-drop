@@ -1,6 +1,6 @@
 type HostPosition = 'beforebegin' | 'afterbegin' | 'beforeend' | 'afterend';
 
-export abstract class DOMComponent<
+export default abstract class DOMComponent<
   T extends HTMLElement,
   U extends HTMLElement
 > {
