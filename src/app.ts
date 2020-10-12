@@ -1,6 +1,6 @@
-import { ProjectStatus } from './models/project.js';
-import { ProjectForm } from './components/project-form.js';
-import { ProjectList } from './components/project-list.js';
+import { ProjectStatus } from './models/project';
+import { ProjectForm } from './components/project-form';
+import { ProjectList } from './components/project-list';
 
 const _projInput = new ProjectForm();
 const _activeList = new ProjectList(ProjectStatus.Active);
